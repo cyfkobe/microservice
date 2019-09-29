@@ -2,11 +2,24 @@ server:
   port: 1025
 spring:
   application:
-    name: eureka
+    name: eureka-server
+#  security:
+#    user:
+#      name: admin
+#      password: admin
 
 eureka:
+  instance:
+    hostname: ${spring.cloud.client.ip-address}
   client:
-    register-with-eureka: false
-    fetch-registry: false
+    register-with-eureka: false # 是否将自己注册为服务
+    fetch-registry: false # 是否禁止向注册中心检索服务
     service-url:
-      defaultZone: http://localhost:1025/eureka/
+      defaultZone: http://${spring.cloud.client.ip-address}:${server.port}/eureka/ # 服务地址（不能使用localhost）
+      #defaultZone: http://admin:admin@${spring.cloud.client.ip-address}:${server.port}/eureka/ # 服务地址（不能使用localhost）
+  server:
+    enable-self-preservation: true # 开启自我保护机制
+    renewal-percent-threshold: 0.85 # 自我保护系数（默认0.85秒）
+    eviction-interval-timer-in-ms: 60000 # 扫描失效服务时间间隔（单位毫秒，默认60秒）
+    wait-time-in-ms-when-sync-empty: 5 # 设置eureka server同步失败的等待时间，默认5分钟，在这期间它不向客户端提供服务注册信息
+    number-of-replication-retries: 5 # 设置eureka server同步失败的重试次数，默认为5次

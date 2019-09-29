@@ -1,0 +1,26 @@
+server:
+  port: 8020
+
+ip: 192.168.10.24
+
+spring:
+  application:
+    name: zuul-server
+
+zuul:
+  routes:
+    api-a:
+      path: /api-a/**
+      serviceId: service-ribbon
+      api-b:
+        path: /api-b/**
+        serviceId: service-feign
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://${ip}:1025/eureka
+      service-id: ${spring.application.name}
