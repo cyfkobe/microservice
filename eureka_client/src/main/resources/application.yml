@@ -1,0 +1,17 @@
+ip: localhost
+
+server:
+  port: 4025
+
+spring:
+  application:
+    name: config-server
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://admin:admin@${ip}:1025/eureka
+      service-id: ${spring.application.name}
