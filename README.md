@@ -1,6 +1,9 @@
 # microservice
 
 ```
+构建方式：
+mvn package docker:build -q -Dmaven.test.skip=true
+
 启动eureka-server
 docker run -d --name eureka-server -p 1025:1025 cuiyf/microservice:eureka_server
 
