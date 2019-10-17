@@ -1,0 +1,38 @@
+# 使用此配置需要将依赖注释解开
+ip: localhost
+
+server:
+  port: 8011
+
+spring:
+  application:
+    name: config-client
+  cloud:
+    config:
+      name: ${spring.application.name}
+      label: master
+      profile: amqp
+      discovery:
+        service-id: config-server
+        enabled: true
+
+  rabbitmq:
+    host: ${ip}
+    port: 5672
+    username: root
+    password: root
+
+eureka:
+  instance:
+    prefer-ip-address: true #使用IP注册
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+  client:
+    serviceUrl:
+      defaultZone: http://admin:admin@${ip}:1025/eureka
+
+# 配置刷新：POST请求，http://localhost:8011/actuator/refresh
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'refresh'

@@ -1,0 +1,30 @@
+ip: 192.168.10.24
+
+server:
+  port: 8011
+
+spring:
+  application:
+    name: config-client
+  cloud:
+    config:
+      name: ${spring.application.name}
+      label: master
+      profile: local
+      discovery:
+        service-id: config-server
+        enabled: true
+
+eureka:
+  instance:
+    prefer-ip-address: true #使用IP注册
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+  client:
+    serviceUrl:
+      defaultZone: http://admin:admin@${ip}:1025/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'refresh'

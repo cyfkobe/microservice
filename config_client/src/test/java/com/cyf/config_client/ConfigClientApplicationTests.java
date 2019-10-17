@@ -1,4 +1,4 @@
-package com.cyf.zuul;
+package com.cyf.config_client;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ZuulApplicationTests {
+public class ConfigClientApplicationTests {
 
     @Test
     public void contextLoads() {
